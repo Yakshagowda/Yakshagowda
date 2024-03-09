@@ -1,0 +1,485 @@
+7. Develop a C# program to read a text file and copy the file contents to another text file.
+
+using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        
+        string sourceFilePath = "D:/file1.txt";
+        string destinationFilePath = "D:/file2.txt";
+
+       
+        CopyFile("D:/file1.txt","D:/file2.txt");
+
+        Console.WriteLine("File contents copied successfully.");
+    }
+
+    static void CopyFile(string sourceFilePath, string destinationFilePath)
+    {
+        try
+        {
+           
+            string[] lines = File.ReadAllLines("D:/file1.txt");
+
+           
+            File.WriteAllLines("D:/file2.txt",lines);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
+    }
+}
+
+
+
+8. Develop a C# C# Program to Implement Stack with Push and Pop Operations [Hint: Use class, get/set properties, methods for push and pop and main method]
+
+Program :-
+
+using System;
+
+class Stack
+{
+    private const int MAX_SIZE = 100; // You can adjust the maximum size of the stack
+
+    private int[] stackArray;
+    private int top;
+
+    public Stack()
+    {
+        stackArray = new int[MAX_SIZE];
+        top = -1;
+    }
+
+   
+    public int Size
+    {
+        get { return top + 1; }
+    }
+
+   
+    public void Push(int value)
+    {
+        if (top == MAX_SIZE - 1)
+        {
+            Console.WriteLine("Stack Overflow! Cannot push element onto the stack.");
+        }
+        else
+        {
+            top++;
+            stackArray[top] = value;
+            Console.WriteLine($"Pushed {value} onto the stack.");
+        }
+    }
+
+   
+    public int Pop()
+    {
+        if (top == -1)
+        {
+            Console.WriteLine("Stack Underflow! Cannot pop element from an empty stack.");
+            return -1;
+        }
+        else
+        {
+            int poppedValue = stackArray[top];
+            top--;
+            Console.WriteLine($"Popped {poppedValue} from the stack.");
+            return poppedValue;
+        }
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+       
+        Stack myStack = new Stack();
+
+        
+        myStack.Push(10);
+        myStack.Push(20);
+        myStack.Push(30);
+
+       
+        int poppedValue1 = myStack.Pop();
+        int poppedValue2 = myStack.Pop();
+
+        Console.WriteLine($"Current size of the stack: {myStack.Size}");
+
+        
+        int poppedValue3 = myStack.Pop();
+
+        Console.ReadLine();
+    }
+}
+
+Output :-
+
+Pushed 10 onto the stack.
+Pushed 20 onto the stack.
+Pushed 30 onto the stack.
+Popped 30 from the stack.
+Popped 20 from the stack.
+Current size of the stack: 1
+Popped 10 from the stack.
+
+9. Design a class “Complex” with data members, constructor and method for overloading a binary operator ‘+’. Develop a C# program to read Two complex number and Print the results of addition.
+Program :- 
+
+using System;
+
+class Complex
+{
+    private double real;
+    private double imaginary;
+
+   
+    public Complex(double real, double imaginary)
+    {
+        this.real = real;
+        this.imaginary = imaginary;
+    }
+
+    
+    public Complex()
+    {
+        this.real = 0;
+        this.imaginary = 0;
+    }
+
+   
+    public void Display()
+    {
+        Console.WriteLine($"Complex Number: {real} + {imaginary}i");
+    }
+
+    
+    public static Complex operator +(Complex c1, Complex c2)
+    {
+        return new Complex(c1.real + c2.real, c1.imaginary + c2.imaginary);
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        
+        Console.WriteLine("Enter the first complex number:");
+        Console.Write("Real part: ");
+        double real1 = Convert.ToDouble(Console.ReadLine());
+        Console.Write("Imaginary part: ");
+        double imaginary1 = Convert.ToDouble(Console.ReadLine());
+
+       
+        Console.WriteLine("\nEnter the second complex number:");
+        Console.Write("Real part: ");
+        double real2 = Convert.ToDouble(Console.ReadLine());
+        Console.Write("Imaginary part: ");
+        double imaginary2 = Convert.ToDouble(Console.ReadLine());
+
+        
+        Complex complex1 = new Complex(real1, imaginary1);
+        Complex complex2 = new Complex(real2, imaginary2);
+
+        
+        Complex result = complex1 + complex2;
+
+       
+        Console.WriteLine("\nResults:");
+        complex1.Display();
+        complex2.Display();
+        Console.WriteLine("Sum:");
+        result.Display();
+    }
+}
+
+Output :-
+Enter the first complex number:
+Real part: 10
+Imaginary part: 20
+
+Enter the second complex number:
+Real part: 30
+Imaginary part: 40
+
+Results:
+Complex Number: 10 + 20i
+Complex Number: 30 + 40i
+Sum:
+Complex Number: 40 + 60i
+
+10.Develop a C# program to create a class named shape. Create three sub classes namely: circle, triangle and square, each class has two member functions named draw () and erase (). Demonstrate polymorphism concepts by developing suitable methods, defining member data and main program
+
+Program :- 
+
+using System;
+
+
+class Shape
+{
+    public virtual void Draw()
+    {
+        Console.WriteLine("Drawing a shape");
+    }
+
+    public virtual void Erase()
+    {
+        Console.WriteLine("Erasing a shape");
+    }
+}
+
+
+class Circle : Shape
+{
+    public override void Draw()
+    {
+        Console.WriteLine("Drawing a circle");
+    }
+
+    public override void Erase()
+    {
+        Console.WriteLine("Erasing a circle");
+    }
+}
+
+
+class Triangle : Shape
+{
+    public override void Draw()
+    {
+        Console.WriteLine("Drawing a triangle");
+    }
+
+    public override void Erase()
+    {
+        Console.WriteLine("Erasing a triangle");
+    }
+}
+
+
+class Square : Shape
+{
+    public override void Draw()
+    {
+        Console.WriteLine("Drawing a square");
+    }
+
+    public override void Erase()
+    {
+        Console.WriteLine("Erasing a square");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+       
+        Shape[] shapes = new Shape[]
+        {
+            new Circle(),
+            new Triangle(),
+            new Square()
+        };
+
+        Console.WriteLine("Demonstrating Polymorphism:");
+
+        foreach (Shape in shapes)
+        {
+            shape.Draw();
+            shape.Erase();
+            Console.WriteLine(); // Separate output for each shape
+        }
+    }
+}
+
+Output :-
+
+Demonstrating Polymorphism:
+Drawing a circle
+Erasing a circle
+
+Drawing a triangle
+Erasing a triangle
+
+Drawing a square
+Erasing a square
+
+
+11) Develop a C# program to create an abstract class Shape with abstract methods calculateArea() and
+calculatePerimeter(). Create subclasses Circle and Triangle that extend the Shape class and implement the respective methods to calculate the area and perimeter of each shape.
+
+Program :-
+
+using System;
+
+
+abstract class Shape
+{
+   
+    public abstract double CalculateArea();
+    public abstract double CalculatePerimeter();
+}
+
+
+class Circle : Shape
+{
+    private double radius;
+
+
+    public Circle(double radius)
+    {
+        this.radius = radius;
+    }
+
+
+    public override double CalculateArea()
+    {
+        return Math.PI * Math.Pow(radius, 2);
+    }
+
+    public override double CalculatePerimeter()
+    {
+        return 2 * Math.PI * radius;
+    }
+}
+
+
+class Triangle : Shape
+{
+    private double side1, side2, side3;
+
+   
+    public Triangle(double side1, double side2, double side3)
+    {
+        this.side1 = side1;
+        this.side2 = side2;
+        this.side3 = side3;
+    }
+
+    public override double CalculateArea()
+    {
+       
+        double s = (side1 + side2 + side3) / 2;
+        return Math.Sqrt(s * (s - side1) * (s - side2) * (s - side3));
+    }
+
+    public override double CalculatePerimeter()
+    {
+        return side1 + side2 + side3;
+    }
+}
+
+
+class Program
+{
+    static void Main()
+    {
+       
+        Circle = new Circle(5);
+        Triangle = new Triangle(3, 4, 5);
+
+        
+        Console.WriteLine("Circle - Area: " + circle.CalculateArea() + ", Perimeter: " + circle.CalculatePerimeter());
+
+        
+        Console.WriteLine("Triangle - Area: " + triangle.CalculateArea() + ", Perimeter: " + triangle.CalculatePerimeter());
+    }
+}
+
+Output :- 
+
+Circle - Area: 78.53981633974483,
+
+ Perimeter: 31.41592653589793
+
+Triangle - Area: 6, Perimeter: 12
+
+12) Develop a C# program to create an interface Resizable with methods resizeWidth(int width) and resizeHeight(int height) that allow an object to be resized. Create a class Rectangle that implements the Resizable interface and implements the resize methods.
+
+using System;
+
+
+interface Resizable
+{
+    void ResizeWidth(int width);
+    void ResizeHeight(int height);
+}
+
+
+class Rectangle : Resizable
+{
+    private int width;
+    private int height;
+
+    
+    public Rectangle(int width, int height)
+    {
+        this.width = width;
+        this.height = height;
+    }
+
+   
+    public void ResizeWidth(int newWidth)
+    {
+        width = newWidth;
+        Console.WriteLine($"Width resized to: {width}");
+    }
+
+    public void ResizeHeight(int newHeight)
+    {
+        height = newHeight;
+        Console.WriteLine($"Height resized to: {height}");
+    }
+
+   
+    public void DisplayDetails()
+    {
+        Console.WriteLine($"Rectangle - Width: {width}, Height: {height}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        
+        Rectangle = new Rectangle(10, 5);
+
+       
+        Console.WriteLine("Initial Rectangle Details:");
+        rectangle.DisplayDetails();
+
+       
+        rectangle.ResizeWidth(15);
+        rectangle.ResizeHeight(8);
+
+       
+        Console.WriteLine("\nUpdated Rectangle Details:");
+        rectangle.DisplayDetails();
+    }
+}
+
+Output :-
+
+Rectangle - Width: 10, Height: 5
+Width resized to: 15
+Height resized to: 8
+
+Updated Rectangle Details:
+Rectangle - Width: 15, Height: 8
+
+
+
+
+
+
+
+
