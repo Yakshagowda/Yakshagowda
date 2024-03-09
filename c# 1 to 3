@@ -1,0 +1,115 @@
+1.Develop a C# program to simulate simple arithmetic calculator for Addition, Subtraction, Multiplication,
+Division and Mod operations. Read the operator and operands through console.
+
+using System;
+namespace Sample {
+   class Demo {
+      static void Main(string[] args) {
+         int num1 = 50;
+         int num2 = 25;
+         int result;
+         result = num1 + num2;
+         Console.WriteLine("Value is {0}", result);
+         result = num1 - num2;
+         Console.WriteLine("Value is {0}", result);
+         result = num1 * num2;
+         Console.WriteLine("Value is {0}", result);
+         result = num1 / num2;
+         Console.WriteLine("Value is {0}", result);
+         result = num1 % num2;
+         Console.WriteLine("Value is {0}", result);
+         Console.ReadLine();
+      }
+   }
+}
+
+Output :-
+Value is 75
+Value is 25
+Value is 1250
+Value is 2
+Value is 0
+
+2. Develop a C# program to print Armstrong Number between 1 to 1000.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+public class Program
+{
+public static void Main()
+{
+int mynum,val,res,temp_var;
+int start_no,end_no;
+Console.Write("\n\n");
+Console.Write("Searching for the Armstrong number in a given range of range of numbers:\n");
+Console.Write("--------------------------------------------------------");
+Console.Write("\n\n");
+Console.Write("Enter the starting number... ");
+start_no= Convert.ToInt32(Console.ReadLine());
+Console.Write("Enter the ending number... ");
+end_no= Convert.ToInt32(Console.ReadLine());
+Console.Write("The list of Armstrong numbers in given above range are: ");
+for(mynum=start_no;mynum<=end_no;mynum++){
+temp_var=mynum;
+res = 0;
+while(temp_var!=0){
+val=temp_var % 10;
+temp_var=temp_var/10;
+res=res+(val*val*val);
+}
+if(res==mynum)
+Console.Write("{0} ",mynum);
+}
+Console.Write("\n");
+}
+}
+
+Output :- 
+
+Enter the starting number... 1
+Enter the ending number... 1000
+The list of Armstrong numbers in given above range are: 
+1 
+153 
+370 
+371 
+407
+
+3. Develop a C# program to list all substrings in a given string. [ Hint: use of Substring() method]
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Enter a string:");
+        string input = Console.ReadLine();
+        Console.WriteLine("All substrings in the given string are:");
+        ListSubstrings(input);
+       Console.ReadLine();
+    }
+    static void ListSubstrings(string str)
+    {
+        for (int i = 0; i < str.Length; i++)
+        {
+            for (int j = 1; j <= str.Length - i; j++)
+            {
+                string substring = str.Substring(i, j);
+                Console.WriteLine(substring);
+            }
+        }
+    }
+}
+
+Output :- 
+Enter a string:
+abcd
+All substrings in the given string are:a
+ab
+abc
+abcd
+b
+bc
+bcd
+c
+cd
+d
