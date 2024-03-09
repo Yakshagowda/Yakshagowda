@@ -1,0 +1,199 @@
+create table department(dno int(5) primary key, dname varchar(10), mgrssn varchar(10), 
+mgrstartdate date);
+
+create table employee(ssn varchar(10) primary key, name varchar(10), address varchar(15), 
+sex varchar(4), salary double, superssn varchar(10), dno int(5),foreign key(superssn) references 
+employee(ssn),foreign key(dno) references department(dno));
+
+alter table department add foreign key(mgrssn) references employee(ssn);
+
+create table dlocation(dno int(5), dloc varchar(15), primary key(dno,dloc), foreign key(dno)
+references department(dno));
+
+create table project(pno int(5) primary key, pname varchar(10), ploc varchar(10), dno 
+int(5), foreign key(dno) references department(dno) on delete cascade);
+
+create table works_on(ssn varchar(10), pno int(5), hours int, primary key(ssn,pno), foreign 
+key(ssn) references employee(ssn) on delete cascade, foreign key(pno) references project(pno) on 
+delete cascade);
+
+desc employee;
++----------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| ssn | varchar(10) | NO | PRI | NULL | |
+| name | varchar(10) | YES | | NULL | |
+| address | varchar(15) | YES | | NULL | |
+| sex | varchar(4) | YES | | NULL | |
+| salary | double | YES | | NULL | |
+| superssn | varchar(10) | YES | MUL | NULL | |
+| dno | int(5) | YES | MUL | NULL | |
++----------+-------------+------+-----+---------+-------+
+
+mysql> desc department;
++--------------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| dno | int(5) | NO | PRI | NULL | |
+| dname | varchar(10) | YES | | NULL | |
+| mgrssn | varchar(10) | YES | MUL | NULL | |
+| mgrstartdate | date | YES | | NULL | |
++--------------+-------------+------+-----+---------+-------+
+
+mysql> desc dlocation;
++-------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| dno | int(5) | NO | PRI | 0 | |
+| dloc | varchar(15) | NO | PRI | | |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+mysql> desc project;
++-------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| pno | int(5) | NO | PRI | NULL | |
+| pname | varchar(10) | YES | | NULL | |
+| ploc | varchar(10) | YES | | NULL | |
+| dno | int(5) | YES | MUL | NULL | |
++-------+-------------+------+-----+---------+-------+
+
+mysql> desc works_on;
++-------+-------------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ssn | varchar(10) | NO | PRI | | |
+| pno | int(5) | NO | PRI | 0 | |
+| hours | int(11) | YES | | NULL | |
++-------+-------------+------+-----+---------+-------+
+
+ insert into employee(ssn,name,address,sex,salary) 
+values('W101','scott','bangalore','M',25000);
+
+insert into employee(ssn,name,address,sex,salary) 
+values('W102','smith','mysore','M',15000);
+insert into employee(ssn,name,address,sex,salary) 
+values('M102','john','mangalore','M',600000);
+insert into employee(ssn,name,address,sex,salary) 
+values('M101','kate','mangalore','F',650000);
+insert into department values(01,'sales','W101',20001002);
+insert into department values(02,'account','W102',19901002);
+insert into department values(03,'account','M102',19900503);
+insert into department values(04,'sales','M101',19990503);
+insert into dlocation values(01, 'whitefiled');
+insert into dlocation values(02, 'hoodi');
+insert into dlocation values(03, 'rajajinagar');
+insert into dlocation values(04, 'kormangala');
+insert into project values(301,'IOT', 'USA', 01);
+insert into project values(302,'IOT', 'USA', 02);
+insert into project values(303,'CC', 'Uk', 03);
+insert into project values(304,'ML', 'Uk', 04);
+insert into works_on values('W101',301,12);
+insert into works_on values('W102',302,10);
+insert into works_on values('M101',303,17);
+insert into works_on values('M102',304,14);
+ select * from employee;
++------+-------+-----------+------+--------+----------+------+
+| ssn | name | address | sex | salary | superssn | dno |
++------+-------+-----------+------+--------+----------+------+
+| M101 | kate | mangalore | F | 650000 | NULL | NULL |
+| M102 | john | mangalore | M | 600000 | NULL | NULL |
+| W101 | scott | bangalore | M | 25000 | NULL | NULL |
+| W102 | smith | mysore | M | 15000 | NULL | NULL |
++------+-------+-----------+------+--------+----------+------+
+
+mysql> select * from department;
++-----+---------+--------+--------------+
+| dno | dname | mgrssn | mgrstartdate |
++-----+---------+--------+--------------+
+| 1 | sales | W101 | 2000-10-02 |
+| 2 | account | W102 | 1990-10-02 |
+| 3 | account | M102 | 1990-05-03 |
+| 4 | sales | M101 | 1999-05-03 |
++-----+---------+--------+--------------+
+
+mysql> select * from dlocation;
++-----+-------------+
+| dno | dloc |
++-----+-------------+
+| 1 | whitefiled |
+| 2 | hoodi |
+| 3 | rajajinagar |
+| 4 | kormangala |
++-----+-------------+
+
+mysql> select * from project;
++-----+-------+------+------+
+| pno | pname | ploc | dno |
++-----+-------+------+------+
+| 301 | IOT | USA | 1 |
+| 302 | IOT | USA | 2 |
+| 303 | CC | Uk | 3 |
+| 304 | ML | Uk | 4 |
++-----+-------+------+------+
+
+select * from works_on;
++------+-----+-------+
+| ssn | pno | hours |
++------+-----+-------+
+| M101 | 303 | 17 |
+| M102 | 304 | 14 |
+| W101 | 301 | 12 |
+| W102 | 302 | 10 |
++------+-----+-------+
+
+Query1: . Make a list of all project numbers for projects that involve an employee whose last name 
+is ‘Scott’, either as a worker or as a manager of the department that controls the project.
+(select pno from project p,department d,employee e where p.dno=d.dno and e.ssn=d.mgrssn
+and e.name='scott')
+ union
+ (select pno from employee e,works_on w where e.ssn=w.ssn and e.name='scott');
++-----+
+| pno |
++-----+
+| 301 |
++-----+
+
+Query2: Show the resulting salaries if every employee working on the ‘IoT’ project is
+ given a 10 percent raise.
+select e.ssn,salary*1.1 from employee e, works_on w, project p where e.ssn=w.ssn and 
+w.pno=p.pno and pname='IOT';
++------+--------------------+
+| ssn | salary*1.1 |
++------+--------------------+
+| W101 | 27500.000000000004 |
+| W102 | 16500 |
++------+--------------------+
+
+Query3: Find the sum of the salaries of all employees of the ‘Accounts’ department, as well as the 
+maximum salary, the minimum salary, and the average salary in this department
+select dname, max(salary), min(salary), avg(salary) from employee e, department d where 
+e.dno=d.dno and d.dname='account';
++---------+-------------+-------------+-------------+
+| dname | max(salary) | min(salary) | avg(salary) |
++---------+-------------+-------------+-------------+
+| account | 600000 | 15000 | 307500 |
++---------+-------------+-------------+-------------+
+
+Query4: Retrieve the name of each employee who works on all the projects
+controlledby department number 5 (use NOT EXISTS operator).
+ select e.name from employee e where not exists (select pno from project where dno=4 and 
+pno not in (select pno from works_on w where w.ssn=e.ssn));
++------+
+| name |
++------+
+| john |
++------+
+
+Query5: For each department that has more than five employees, retrieve the department number 
+and the number of its employees who are making more than Rs. 6,00,000.
+select dno, count(ssn) from employee where salary> 600000 and dno in (select dno from 
+employee group by dno having count(ssn)>0);
++------+------------+
+| dno | count(ssn) |
++------+------------+
+| 4 | 1 |
++------+------------+
+
+CONCLUSION: Tables are created and the values have been inserted accordingly and all the 
+mentioned queries have been executed
